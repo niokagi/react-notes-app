@@ -17,7 +17,7 @@ export default function MobileMenu({
           onClick={() => onShowArchived(false)}
           className={`flex-1 py-2 px-4 rounded-md transition-colors ${
             !showArchived
-              ? "bg-gray-600 text-white"
+              ? "bg-gray-300 text-black"
               : "bg-gray-100 text-gray-600"
           }`}
         >
@@ -27,7 +27,7 @@ export default function MobileMenu({
           onClick={() => onShowArchived(true)}
           className={`flex-1 py-2 px-4 rounded-md transition-colors ${
             showArchived
-              ? "bg-gray-600 text-white"
+              ? "bg-gray-300 text-black"
               : "bg-gray-100 text-gray-600"
           }`}
         >
