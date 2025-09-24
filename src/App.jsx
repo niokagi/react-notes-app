@@ -30,64 +30,47 @@ export default function App() {
 
   return (
     <>
-           {" "}
       <Sidebar
         onAddNote={() => setShowAddModal(true)}
         onShowArchived={setShowArchived}
         showArchived={showArchived}
       />
-           {" "}
       <main className="flex-1 flex flex-col lg:w-[78%] lg:absolute lg:right-0">
-                <MobileNav />       {" "}
+        <MobileNav />
         <div className="flex-1 p-4 lg:p-8 min-h-[100vh]">
-                   {" "}
           <div className="max-w-7xl mx-auto">
-                       {" "}
             <div className="mb-6">
-                           {" "}
               <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                                {showArchived ? "Archived Notes" : "My Notes"} 
-                           {" "}
+                {showArchived ? "Archived Notes" : "My Notes"}
               </h2>
-                           {" "}
               <p className="text-gray-600 mb-6">
-                               {" "}
                 {showArchived
                   ? "Here is a collection of your archived notes."
                   : "Here is a collection of your active notes"}
-                             {" "}
               </p>
-                           {" "}
               <SearchBar
                 keyword={keyword}
                 keywordChange={onKeywordChangeHandler}
               />
-                           {" "}
               <MobileMenu
                 onAddNote={() => setShowAddModal(true)}
                 onShowArchived={setShowArchived}
                 showArchived={showArchived}
               />
-                         {" "}
             </div>
-                       {" "}
             <NotesList
               notes={filteredNotes}
               onDelete={deleteNote}
               onArchive={archiveNote}
               showArchived={showArchived}
             />
-                     {" "}
           </div>
-                 {" "}
         </div>
-                <Footer />     {" "}
+        <Footer />
       </main>
-           {" "}
       {showAddModal && (
         <NoteInput addNote={addNote} onClose={() => setShowAddModal(false)} />
       )}
-         {" "}
     </>
   );
 }
