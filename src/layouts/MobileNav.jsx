@@ -1,9 +1,14 @@
+import { NotebookText } from "lucide-react";
+
 export default function MobileNav() {
   return (
-    <nav className="lg:hidden bg-white border-b border-gray-200 sticky top-0 flex justify-center items-center h-[4.8rem]">
-      <h1 className="text-2xl font-bold text-gray-800">
-        &lt; NioNotes /&gt;
-      </h1>
+    <nav className="w-full my-9 px-4 pr-10 flex items-center justify-between sm:hidden">
+      <div className="px-3 h-10 w-36 bg-gray-200 rounded-2xl flex items-center justify-center">
+        <h1 className="text-base font-bold text-gray-800">
+          &lt;NioNotes /&gt;
+        </h1>
+      </div>
+      <NotebookText size={27} className="text-gray-400" />
     </nav>
   );
 }

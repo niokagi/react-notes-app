@@ -1,5 +1,6 @@
 {
   "name": "react-notes-app",
+  "author": "Adhim Niokagi",
   "private": true,
   "version": "0.0.0",
   "type": "module",
