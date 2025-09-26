@@ -7,7 +7,7 @@ export default function MobileMenu({
     <>
       <button
         onClick={onAddNote}
-        className="!w-full flex items-center justify-center gap-2 p-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors mb-5"
+        className="w-full flex items-center justify-center gap-2 p-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors mb-5"
       >
         <span className="text-xl">+</span>
         <span>Add Note</span>

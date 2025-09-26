@@ -1,6 +1,6 @@
 export default function SearchBar({ keyword, keywordChange }) {
   return (
-    <div className="mb-6 !w-full">
+    <div className="mb-6">
       <input
         type="text"
         placeholder="Search for a notes..."
