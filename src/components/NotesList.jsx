@@ -7,7 +7,7 @@ export default function NotesList({
   showArchived,
 }) {
   return notes.length ? (
-    <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+    <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 w-full">
       {notes.map((note) => (
         <NoteItem
           key={note.id}
@@ -18,7 +18,7 @@ export default function NotesList({
       ))}
     </div>
   ) : (
-    <div className="text-center py-12">
+    <div className="text-center py-12 w-full">
       <p className="text-gray-500 text-lg">
         {showArchived ? "No archived notes" : "No notes available"}
       </p>
