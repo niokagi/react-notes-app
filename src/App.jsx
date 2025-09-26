@@ -37,7 +37,7 @@ export default function App() {
       />
       <main className="flex-1 flex flex-col max-lg:w-full lg:w-[78%] lg:absolute lg:right-0">
         <MobileNav />
-        <div className="flex-1 p-4 lg:p-8 min-h-[100dvh]">
+        <div className="flex-1 p-5 lg:p-8 min-h-[100dvh]">
           <div className="max-w-7xl mx-auto w-full flex flex-col">
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-2 sm:mt-2">
