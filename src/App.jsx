@@ -6,6 +6,7 @@ import NoteInput from "./components/NoteInput";
 import MobileMenu from "./layouts/MobileMenu";
 import Footer from "./layouts/Footer";
 import Toast from "./components/Toast";
+import SortMenu from "./components/SortMenu";
 import { useNotes } from "./hooks/useNotes";
 import MobileNav from "./layouts/MobileNav";
 
@@ -16,6 +17,7 @@ export default function App() {
   const [noteToEdit, setNoteToEdit] = useState(null);
   const [showArchived, setShowArchived] = useState(false);
   const [toast, setToast] = useState(null);
+  const [sortBy, setSortBy] = useState("newest");
 
   const showToast = (message, type = "info") => {
     setToast({ message, type });
@@ -60,15 +62,32 @@ export default function App() {
     setNoteToEdit(null);
   };
 
-  const filteredNotes = useMemo(() => {
-    return notes.filter((note) => {
+  const filteredAndSortedNotes = useMemo(() => {
+    let filtered = notes.filter((note) => {
       const matchesKeyword = note.title
         .toLowerCase()
         .includes(keyword.toLowerCase());
       const matchesArchiveStatus = note.archived === showArchived;
       return matchesKeyword && matchesArchiveStatus;
     });
-  }, [notes, keyword, showArchived]);
+
+    // Sort notes
+    switch (sortBy) {
+      case "newest":
+        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      case "oldest":
+        filtered.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        break;
+      case "title":
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      default:
+        break;
+    }
+
+    return filtered;
+  }, [notes, keyword, showArchived, sortBy]);
 
   const notesCount = useMemo(() => {
     return {
@@ -105,15 +124,20 @@ export default function App() {
                   <div className="bg-white rounded-xl px-6 py-3 shadow-sm border border-gray-200">
                     <div className="text-sm text-gray-500 mb-1">Total Notes</div>
                     <div className="text-2xl font-bold text-gray-900">
-                      {filteredNotes.length}
+                      {filteredAndSortedNotes.length}
                     </div>
                   </div>
                 </div>
               </div>
-              <SearchBar
-                keyword={keyword}
-                keywordChange={onKeywordChangeHandler}
-              />
+              <div className="flex gap-3 mb-6">
+                <div className="flex-1">
+                  <SearchBar
+                    keyword={keyword}
+                    keywordChange={onKeywordChangeHandler}
+                  />
+                </div>
+                <SortMenu onSortChange={setSortBy} currentSort={sortBy} />
+              </div>
               <MobileMenu
                 onAddNote={() => setShowAddModal(true)}
                 onShowArchived={setShowArchived}
@@ -121,7 +145,7 @@ export default function App() {
               />
             </div>
             <NotesList
-              notes={filteredNotes}
+              notes={filteredAndSortedNotes}
               onDelete={handleDeleteNote}
               onArchive={handleArchiveNote}
               onEdit={handleEditClick}
