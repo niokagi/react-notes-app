@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import Sidebar from "./components/Sidebar";
 import SearchBar from "./components/SearchBar";
 import NotesList from "./components/NotesList";
@@ -19,48 +19,45 @@ export default function App() {
   const [toast, setToast] = useState(null);
   const [sortBy, setSortBy] = useState("newest");
 
-  const showToast = (message, type = "info") => {
+  const showToast = useCallback((message, type = "info") => {
     setToast({ message, type });
-  };
+  }, []);
 
-  const onKeywordChangeHandler = (keyword) => {
+  const onKeywordChangeHandler = useCallback((keyword) => {
     setKeyword(keyword);
-  };
+  }, []);
 
-  const handleAddNote = (note) => {
+  const handleAddNote = useCallback((note) => {
     addNote(note);
-    showToast("Note created successfully!", "success");
-  };
+    showToast("Note created successfully!");
+  }, [addNote, showToast]);
 
-  const handleEditNote = (note) => {
+  const handleEditNote = useCallback((note) => {
     editNote(note);
-    showToast("Note updated successfully!", "success");
+    showToast("Note updated successfully!");
     setNoteToEdit(null);
-  };
+  }, [editNote, showToast]);
 
-  const handleDeleteNote = (id) => {
+  const handleDeleteNote = useCallback((id) => {
     deleteNote(id);
-    showToast("Note deleted", "info");
-  };
+    showToast("Note deleted");
+  }, [deleteNote, showToast]);
 
-  const handleArchiveNote = (id) => {
+  const handleArchiveNote = useCallback((id) => {
     const note = notes.find((n) => n.id === id);
     archiveNote(id);
-    showToast(
-      note?.archived ? "Note unarchived" : "Note archived",
-      "info"
-    );
-  };
+    showToast(note?.archived ? "Note unarchived" : "Note archived");
+  }, [notes, archiveNote, showToast]);
 
-  const handleEditClick = (note) => {
+  const handleEditClick = useCallback((note) => {
     setNoteToEdit(note);
     setShowAddModal(true);
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setShowAddModal(false);
     setNoteToEdit(null);
-  };
+  }, []);
 
   const filteredAndSortedNotes = useMemo(() => {
     let filtered = notes.filter((note) => {
@@ -71,7 +68,6 @@ export default function App() {
       return matchesKeyword && matchesArchiveStatus;
     });
 
-    // Sort notes
     switch (sortBy) {
       case "newest":
         filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -97,38 +93,43 @@ export default function App() {
   }, [notes]);
 
   return (
-    <>
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar
         onAddNote={() => setShowAddModal(true)}
         onShowArchived={setShowArchived}
         showArchived={showArchived}
         notesCount={notesCount}
       />
-      <main className="flex-1 flex flex-col max-lg:w-full lg:w-[78%] lg:absolute lg:right-0">
+      
+      <main className="flex-1 flex flex-col lg:ml-[280px]">
         <MobileNav />
-        <div className="flex-1 p-5 lg:p-8 min-h-[100dvh]">
-          <div className="max-w-7xl mx-auto w-full flex flex-col">
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-4">
+        
+        <div className="flex-1 p-6 lg:p-8">
+          <div className="max-w-[1600px] mx-auto w-full">
+            <header className="mb-8">
+              <div className="flex items-start justify-between mb-6">
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-1 sm:mt-2 animate-fade-in">
-                    {showArchived ? "📦 Archived Notes" : "📝 My Notes"}
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                    {showArchived ? "Archived Notes" : "My Notes"}
                   </h2>
-                  <p className="text-gray-600 animate-fade-in">
+                  <p className="text-gray-600">
                     {showArchived
                       ? "Browse your archived notes"
                       : "Manage your active notes"}
                   </p>
                 </div>
-                <div className="hidden sm:block animate-fade-in">
-                  <div className="bg-white rounded-xl px-6 py-3 shadow-sm border border-gray-200">
-                    <div className="text-sm text-gray-500 mb-1">Total Notes</div>
-                    <div className="text-2xl font-bold text-gray-900">
+                <div className="hidden sm:block">
+                  <div className="bg-white rounded-lg px-6 py-4 border-2 border-gray-200">
+                    <div className="text-xs text-gray-600 mb-1 font-medium">
+                      Total Notes
+                    </div>
+                    <div className="text-3xl font-bold text-gray-900">
                       {filteredAndSortedNotes.length}
                     </div>
                   </div>
                 </div>
               </div>
+              
               <div className="flex gap-3 mb-6">
                 <div className="flex-1">
                   <SearchBar
@@ -138,12 +139,14 @@ export default function App() {
                 </div>
                 <SortMenu onSortChange={setSortBy} currentSort={sortBy} />
               </div>
+              
               <MobileMenu
                 onAddNote={() => setShowAddModal(true)}
                 onShowArchived={setShowArchived}
                 showArchived={showArchived}
               />
-            </div>
+            </header>
+            
             <NotesList
               notes={filteredAndSortedNotes}
               onDelete={handleDeleteNote}
@@ -153,8 +156,10 @@ export default function App() {
             />
           </div>
         </div>
+        
         <Footer />
       </main>
+      
       {showAddModal && (
         <NoteInput
           addNote={handleAddNote}
@@ -163,6 +168,7 @@ export default function App() {
           onClose={handleCloseModal}
         />
       )}
+      
       {toast && (
         <Toast
           message={toast.message}
@@ -170,6 +176,6 @@ export default function App() {
           onClose={() => setToast(null)}
         />
       )}
-    </>
+    </div>
   );
 }

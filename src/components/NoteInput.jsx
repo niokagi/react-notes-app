@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNoteInput } from "../hooks/useNoteInput";
+import { X } from "lucide-react";
 
 export default function NoteInput({ addNote, editNote, noteToEdit, onClose }) {
   const [show, setShow] = useState(false);
@@ -31,14 +32,14 @@ export default function NoteInput({ addNote, editNote, noteToEdit, onClose }) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 transition-opacity duration-200 ${
         show ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
       onMouseDown={handleOverlayClick}
     >
       <div
         ref={modalRef}
-        className={`bg-white rounded-3xl p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto transform transition-all duration-300 shadow-2xl ${
+        className={`bg-white rounded-lg p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto transform transition-all duration-200 ${
           show ? "scale-100 opacity-100" : "scale-95 opacity-0"
         }`}
       >
@@ -48,57 +49,63 @@ export default function NoteInput({ addNote, editNote, noteToEdit, onClose }) {
           </h2>
           <button
             onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full transition-all"
+            className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all"
+            aria-label="Close modal"
           >
-            ✕
+            <X size={24} />
           </button>
         </div>
 
-        <div>
-          <div className="mb-5">
+        <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }}>
+          <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
-              <label className="block text-sm font-semibold text-gray-700">
+              <label htmlFor="note-title" className="block text-sm font-bold text-gray-900">
                 Title
               </label>
-              <span className={`text-sm font-medium ${remainingChars < 10 ? 'text-red-500' : 'text-gray-500'}`}>
+              <span className={`text-sm font-medium ${remainingChars < 10 ? 'text-gray-900' : 'text-gray-600'}`}>
                 {remainingChars} characters left
               </span>
             </div>
             <input
+              id="note-title"
               type="text"
               placeholder="Enter note title..."
               value={title}
               onChange={onTitleChangeHandler}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-gray-900 focus:ring-2 focus:ring-gray-900 transition-all"
             />
           </div>
+          
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="note-content" className="block text-sm font-bold text-gray-900 mb-2">
               Content
             </label>
             <textarea
+              id="note-content"
               placeholder="Write your note here..."
               value={body}
               onChange={onBodyChangeHandler}
-              rows={8}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all"
+              rows={10}
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-gray-900 focus:ring-2 focus:ring-gray-900 resize-none transition-all"
             />
           </div>
+          
           <div className="flex gap-3">
             <button
-              onClick={onSubmit}
-              className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+              type="submit"
+              className="flex-1 bg-gray-900 text-white py-3 px-6 rounded-lg hover:bg-gray-800 transition-all font-semibold border-2 border-gray-900"
             >
               {noteToEdit ? "Update Note" : "Add Note"}
             </button>
             <button
+              type="button"
               onClick={handleClose}
-              className="flex-1 bg-gray-100 text-gray-700 py-3 px-6 rounded-xl hover:bg-gray-200 transition-all font-semibold"
+              className="flex-1 bg-white text-gray-900 py-3 px-6 rounded-lg hover:bg-gray-100 transition-all font-semibold border-2 border-gray-300"
             >
               Cancel
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

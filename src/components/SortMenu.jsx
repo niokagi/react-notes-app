@@ -1,4 +1,4 @@
-import { ArrowUpDown, SortAsc, SortDesc, Calendar } from "lucide-react";
+import { ArrowUpDown, SortAsc, SortDesc } from "lucide-react";
 import { useState } from "react";
 
 export default function SortMenu({ onSortChange, currentSort }) {
@@ -22,7 +22,8 @@ export default function SortMenu({ onSortChange, currentSort }) {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all text-sm font-medium text-gray-700 shadow-sm"
+        className="flex items-center gap-2 px-4 py-3 bg-white border-2 border-gray-300 rounded-lg hover:border-gray-900 transition-all text-sm font-medium text-gray-900"
+        aria-label="Sort notes"
       >
         <Icon size={16} />
         <span className="hidden sm:inline">Sort</span>
@@ -34,7 +35,7 @@ export default function SortMenu({ onSortChange, currentSort }) {
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-200 py-2 z-20 animate-scale-in">
+          <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg border-2 border-gray-300 py-2 z-20 animate-scale-in shadow-lg">
             {sortOptions.map((option) => {
               const OptionIcon = option.icon;
               return (
@@ -43,8 +44,8 @@ export default function SortMenu({ onSortChange, currentSort }) {
                   onClick={() => handleSortSelect(option.value)}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
                     currentSort === option.value
-                      ? "bg-blue-50 text-blue-700 font-medium"
-                      : "text-gray-700 hover:bg-gray-50"
+                      ? "bg-gray-900 text-white font-medium"
+                      : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
                   <OptionIcon size={16} />
