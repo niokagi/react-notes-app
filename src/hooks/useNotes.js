@@ -21,6 +21,14 @@ export function useNotes() {
     setNotes((prevNotes) => [...prevNotes, newNote]);
   };
 
+  const editNote = (updatedNote) => {
+    setNotes((prevNotes) =>
+      prevNotes.map((note) =>
+        note.id === updatedNote.id ? updatedNote : note
+      )
+    );
+  };
+
   const deleteNote = (id) => {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
   };
@@ -33,5 +41,5 @@ export function useNotes() {
     );
   };
 
-  return { notes, addNote, deleteNote, archiveNote };
+  return { notes, addNote, editNote, deleteNote, archiveNote };
 }

@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const MAX_TITLE_LENGTH = 50;
 
-export function useNoteInput({ addNote, onClose }) {
+export function useNoteInput({ addNote, editNote, noteToEdit, onClose }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+
+  useEffect(() => {
+    if (noteToEdit) {
+      setTitle(noteToEdit.title);
+      setBody(noteToEdit.body);
+    }
+  }, [noteToEdit]);
 
   const onTitleChangeHandler = (e) => {
     if (e.target.value.length <= MAX_TITLE_LENGTH) {
@@ -18,13 +25,21 @@ export function useNoteInput({ addNote, onClose }) {
 
   const onSubmit = () => {
     if (title.trim() && body.trim()) {
-      addNote({
-        id: +new Date(),
-        title: title.trim(),
-        body: body.trim(),
-        archived: false,
-        createdAt: new Date().toISOString(),
-      });
+      if (noteToEdit) {
+        editNote({
+          ...noteToEdit,
+          title: title.trim(),
+          body: body.trim(),
+        });
+      } else {
+        addNote({
+          id: +new Date(),
+          title: title.trim(),
+          body: body.trim(),
+          archived: false,
+          createdAt: new Date().toISOString(),
+        });
+      }
       setTitle("");
       setBody("");
       onClose();
