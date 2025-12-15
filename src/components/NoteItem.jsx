@@ -25,7 +25,7 @@ export default function NoteItem({ note, onDelete, onArchive, onEdit }) {
   return (
     <>
       <div 
-        className={`${bgColor} text-white rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl cursor-pointer animate-fade-in relative overflow-hidden`}
+        className={`${bgColor} text-white rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl animate-fade-in relative overflow-hidden`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -69,7 +69,7 @@ export default function NoteItem({ note, onDelete, onArchive, onEdit }) {
               </button>
             </div>
           </div>
-          <p className="text-gray-200 text-sm leading-relaxed line-clamp-4">{note.body}</p>
+          <p className="text-gray-200 text-sm leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical' }}>{note.body}</p>
         </div>
       </div>
 

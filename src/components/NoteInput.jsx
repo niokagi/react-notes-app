@@ -70,7 +70,6 @@ export default function NoteInput({ addNote, editNote, noteToEdit, onClose }) {
               value={title}
               onChange={onTitleChangeHandler}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              autoFocus
             />
           </div>
           <div className="mb-6">
