@@ -76,7 +76,7 @@ export default function NoteEditor({ note, onSave, onClose }: NoteEditorProps) {
 
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-primary mb-2">
+            <label className="block text-sm font-medium text-[color:var(--color-text)] mb-2">
               Title
             </label>
             <input
@@ -89,7 +89,7 @@ export default function NoteEditor({ note, onSave, onClose }: NoteEditorProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-primary mb-2">
+            <label className="block text-sm font-medium text-[color:var(--color-text)] mb-2">
               Blocks
             </label>
             <BlockEditor blocks={blocks} onChange={setBlocks} />
