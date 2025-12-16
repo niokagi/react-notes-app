@@ -7,7 +7,7 @@ interface NoteItemProps {
   note: NoteModel;
   onDelete: (id: number) => void;
   onArchive: (id: number) => void;
-  onEdit: (note: NoteModel) => void;
+  onEdit: (id: number) => void;
 }
 
 const BlockPreview = ({ block }: { block: NoteModel["blocks"][number] }) => {
@@ -66,7 +66,7 @@ export default function NoteItem({ note, onDelete, onArchive, onEdit }: NoteItem
           </div>
           <div className="flex gap-2">
             <button
-              onClick={() => onEdit(note)}
+              onClick={() => onEdit(note.id)}
               className="icon-button"
               title="Edit"
             >

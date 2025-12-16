@@ -61,8 +61,7 @@ export default function NoteEditor({ note, onSave, onClose }: NoteEditorProps) {
           <div>
             <h2 className="heading-modal">Edit note</h2>
             <p className="text-sm text-[color:var(--color-text-muted)]">
-              Update blocks, lists, or code. Changes save only when you click Save
-              changes.
+              Update blocks, lists, or code. Changes are saved when you click Save changes.
             </p>
           </div>
           <button

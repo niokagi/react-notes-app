@@ -19,8 +19,13 @@ export default function App() {
   const [editingNote, setEditingNote] = useState<NoteModel | null>(null);
 
   const handleSaveEdit = (updated: NoteModel) => {
-    updateNote(updated.id, () => updated);
+    updateNote(updated.id, updated);
     setEditingNote(null);
+  };
+
+  const handleStartEdit = (id: number) => {
+    const next = notes.find((n) => n.id === id) || null;
+    setEditingNote(next);
   };
 
   const filteredNotes = useMemo(() => {
@@ -78,7 +83,7 @@ export default function App() {
               onDelete={deleteNote}
               onArchive={archiveNote}
               showArchived={showArchived}
-              onEdit={setEditingNote}
+              onEdit={handleStartEdit}
               onAddNote={() => setShowAddModal(true)}
             />
           </div>
