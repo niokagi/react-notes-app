@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import { NoteModel } from "../types";
 import { blocksToPlainText } from "../utils/blocks";
@@ -36,7 +36,10 @@ export default function NoteEditor({ note, onSave, onClose }: NoteEditorProps) {
     }
   };
 
-  const isSaveDisabled = blocksToPlainText(blocks).length === 0;
+  const isSaveDisabled = useMemo(
+    () => blocksToPlainText(blocks).length === 0,
+    [blocks]
+  );
 
   const handleSave = () => {
     if (isSaveDisabled) return;
@@ -60,13 +63,13 @@ export default function NoteEditor({ note, onSave, onClose }: NoteEditorProps) {
         <div className="flex justify-between items-start mb-6">
           <div>
             <h2 className="heading-modal">Edit note</h2>
-            <p className="text-sm text-[color:var(--color-text-muted)]">
+            <p className="text-sm text-muted">
               Update blocks, lists, or code. Changes are saved when you click Save changes.
             </p>
           </div>
           <button
             onClick={handleClose}
-            className="text-[color:var(--color-text-muted)] hover:text-[color:var(--color-text)] text-xl"
+            className="text-muted hover-text-primary text-xl"
             aria-label="Close"
           >
             ✕
@@ -75,7 +78,7 @@ export default function NoteEditor({ note, onSave, onClose }: NoteEditorProps) {
 
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-[color:var(--color-text)] mb-2">
+            <label className="block text-sm font-medium text-primary mb-2">
               Title
             </label>
             <input
@@ -88,7 +91,7 @@ export default function NoteEditor({ note, onSave, onClose }: NoteEditorProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-[color:var(--color-text)] mb-2">
+            <label className="block text-sm font-medium text-primary mb-2">
               Blocks
             </label>
             <BlockEditor blocks={blocks} onChange={setBlocks} />

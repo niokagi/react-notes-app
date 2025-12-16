@@ -16,6 +16,9 @@
   --color-danger-strong: #f87171;
   --color-overlay: rgba(0, 0, 0, 0.5);
   --shadow-soft: 0 20px 45px rgba(0, 0, 0, 0.08);
+  --font-hero: clamp(1.9rem, 1.4vw + 1.5rem, 2.6rem);
+  --font-heading: clamp(1.25rem, 1vw + 1rem, 1.75rem);
+  --font-body: clamp(0.98rem, 0.2vw + 0.94rem, 1.05rem);
 }
 
 html {
@@ -51,12 +54,6 @@ button {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-soft);
-}
-
-:root {
-  --font-hero: clamp(1.9rem, 1.4vw + 1.5rem, 2.6rem);
-  --font-heading: clamp(1.25rem, 1vw + 1rem, 1.75rem);
-  --font-body: clamp(0.98rem, 0.2vw + 0.94rem, 1.05rem);
 }
 
 .shadow-soft {
@@ -224,6 +221,18 @@ button {
   font-size: var(--font-body);
   color: var(--color-text-subtle);
   line-height: 1.6;
+}
+
+.text-primary {
+  color: var(--color-text);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.hover-text-primary:hover {
+  color: var(--color-text);
 }
 
 .icon-button {
