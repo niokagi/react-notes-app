@@ -18,6 +18,11 @@ export default function App() {
   const [showArchived, setShowArchived] = useState(false);
   const [editingNote, setEditingNote] = useState<NoteModel | null>(null);
 
+  const handleSaveEdit = (updated: NoteModel) => {
+    updateNote(updated.id, () => updated);
+    setEditingNote(null);
+  };
+
   const filteredNotes = useMemo(() => {
     return notes.filter((note) => {
       const haystack = `${note.title} ${blocksToPlainText(note.blocks)}`.toLowerCase();
@@ -86,12 +91,7 @@ export default function App() {
       {editingNote && (
         <NoteEditor
           note={editingNote}
-          onSave={(updated) =>
-            updateNote(editingNote.id, () => {
-              setEditingNote(null);
-              return updated;
-            })
-          }
+          onSave={handleSaveEdit}
           onClose={() => setEditingNote(null)}
         />
       )}

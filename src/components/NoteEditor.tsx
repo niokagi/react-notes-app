@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 import { NoteModel } from "../types";
 import { blocksToPlainText } from "../utils/blocks";
 import BlockEditor from "./BlockEditor";
