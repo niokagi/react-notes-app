@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Archive, ArchiveRestore, Code2, Trash2 } from "lucide-react";
+import { Archive, ArchiveRestore, Code2, Pencil, Trash2 } from "lucide-react";
 import { showFormattedDate } from "../data/data";
 import { NoteModel } from "../types";
 
@@ -7,6 +7,7 @@ interface NoteItemProps {
   note: NoteModel;
   onDelete: (id: number) => void;
   onArchive: (id: number) => void;
+  onEdit: (note: NoteModel) => void;
 }
 
 const BlockPreview = ({ block }: { block: NoteModel["blocks"][number] }) => {
@@ -40,7 +41,7 @@ const BlockPreview = ({ block }: { block: NoteModel["blocks"][number] }) => {
   return <p className="text-sm text-gray-100 leading-relaxed">{block.text}</p>;
 };
 
-export default function NoteItem({ note, onDelete, onArchive }: NoteItemProps) {
+export default function NoteItem({ note, onDelete, onArchive, onEdit }: NoteItemProps) {
   const [showModal, setShowModal] = useState(false);
   const blocks = note.blocks || [];
   const handleDelete = () => {
@@ -64,6 +65,13 @@ export default function NoteItem({ note, onDelete, onArchive }: NoteItemProps) {
             <h3 className="text-xl font-semibold text-white">{note.title}</h3>
           </div>
           <div className="flex gap-2">
+            <button
+              onClick={() => onEdit(note)}
+              className="icon-button"
+              title="Edit"
+            >
+              <Pencil size={18} />
+            </button>
             <button
               onClick={() => onArchive(note.id)}
               className="icon-button"

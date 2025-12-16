@@ -53,6 +53,12 @@ button {
   box-shadow: var(--shadow-soft);
 }
 
+:root {
+  --font-hero: clamp(1.9rem, 1.4vw + 1.5rem, 2.6rem);
+  --font-heading: clamp(1.25rem, 1vw + 1rem, 1.75rem);
+  --font-body: clamp(0.98rem, 0.2vw + 0.94rem, 1.05rem);
+}
+
 .shadow-soft {
   box-shadow: var(--shadow-soft);
 }
@@ -198,6 +204,26 @@ button {
   padding: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
+.heading-hero {
+  font-size: var(--font-hero);
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.heading-modal {
+  font-size: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.text-body {
+  font-size: var(--font-body);
+  color: var(--color-text-subtle);
+  line-height: 1.6;
 }
 
 .icon-button {

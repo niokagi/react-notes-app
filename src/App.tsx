@@ -3,17 +3,20 @@ import Sidebar from "./components/Sidebar";
 import SearchBar from "./components/SearchBar";
 import NotesList from "./components/NotesList";
 import NoteInput from "./components/NoteInput";
+import NoteEditor from "./components/NoteEditor";
 import MobileMenu from "./layouts/MobileMenu";
 import Footer from "./layouts/Footer";
 import { useNotes } from "./hooks/useNotes";
 import MobileNav from "./layouts/MobileNav";
 import { blocksToPlainText } from "./utils/blocks";
+import { NoteModel } from "./types";
 
 export default function App() {
-  const { notes, addNote, deleteNote, archiveNote } = useNotes();
+  const { notes, addNote, deleteNote, archiveNote, updateNote } = useNotes();
   const [keyword, setKeyword] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
+  const [editingNote, setEditingNote] = useState<NoteModel | null>(null);
 
   const filteredNotes = useMemo(() => {
     return notes.filter((note) => {
@@ -41,10 +44,8 @@ export default function App() {
                   <p className="text-sm text-[color:var(--color-text-muted)] mb-1">
                     Block-Based Editor
                   </p>
-                  <h2 className="text-3xl font-bold text-[color:var(--color-text)]">
-                    Build ideas with blocks
-                  </h2>
-                  <p className="text-[color:var(--color-text-subtle)] max-w-2xl mt-2">
+                  <h2 className="heading-hero">Build ideas with blocks</h2>
+                  <p className="text-body max-w-2xl mt-2">
                     Create headings, paragraphs, lists, and code snippets. Use{" "}
                     <code className="px-1 rounded bg-[color:var(--color-surface-subtle)]">/</code>{" "}
                     to summon the command palette while typing.
@@ -72,6 +73,7 @@ export default function App() {
               onDelete={deleteNote}
               onArchive={archiveNote}
               showArchived={showArchived}
+              onEdit={setEditingNote}
               onAddNote={() => setShowAddModal(true)}
             />
           </div>
@@ -80,6 +82,18 @@ export default function App() {
       </main>
       {showAddModal && (
         <NoteInput addNote={addNote} onClose={() => setShowAddModal(false)} />
+      )}
+      {editingNote && (
+        <NoteEditor
+          note={editingNote}
+          onSave={(updated) =>
+            updateNote(editingNote.id, () => {
+              setEditingNote(null);
+              return updated;
+            })
+          }
+          onClose={() => setEditingNote(null)}
+        />
       )}
     </div>
   );

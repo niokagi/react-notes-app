@@ -7,6 +7,7 @@ interface NotesListProps {
   onArchive: (id: number) => void;
   showArchived: boolean;
   onAddNote: () => void;
+  onEdit: (note: NoteModel) => void;
 }
 
 export default function NotesList({
@@ -15,6 +16,7 @@ export default function NotesList({
   onArchive,
   showArchived,
   onAddNote,
+  onEdit,
 }: NotesListProps) {
   if (!notes.length) {
     return (
@@ -40,6 +42,7 @@ export default function NotesList({
           note={note}
           onDelete={onDelete}
           onArchive={onArchive}
+          onEdit={() => onEdit(note)}
         />
       ))}
     </div>
