@@ -1,27 +1,229 @@
 @import "tailwindcss";
 
+:root {
+  --color-page: #f9fafb;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f3f4f6;
+  --color-surface-strong: #1e293b;
+  --color-text: #1f2937;
+  --color-text-subtle: #4b5563;
+  --color-text-muted: #9ca3af;
+  --color-border: #e5e7eb;
+  --color-border-strong: #d1d5db;
+  --color-primary: #4b5563;
+  --color-primary-strong: #374151;
+  --color-danger: #ef4444;
+  --color-danger-strong: #f87171;
+  --color-overlay: rgba(0, 0, 0, 0.5);
+  --shadow-soft: 0 20px 45px rgba(0, 0, 0, 0.08);
+}
+
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    /* border: red 1px solid; */
+  box-sizing: border-box;
 }
 
 body {
-    @apply min-h-screen bg-gray-50 min-w-full;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  min-width: 100%;
+  background-color: var(--color-page);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button {
-    @apply cursor-pointer;
+  cursor: pointer;
 }
 
-/* search bar */
-input.search-bar {
-    @apply w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent;
+.app-shell {
+  display: flex;
+  background-color: var(--color-page);
+  color: var(--color-text);
+}
+
+.surface-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-border-strong);
+  font-weight: 600;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-strong);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background-color: var(--color-surface-subtle);
+  color: var(--color-text);
+  padding: 0.7rem 1.1rem;
+  border-radius: 0.75rem;
+  border: 1px dashed var(--color-border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: auto;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.btn-ghost:hover {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: #ffffff;
+  padding: 0.6rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-danger);
+  font-weight: 600;
+  transition: background-color 150ms ease;
+}
+
+.btn-danger:hover {
+  background-color: var(--color-danger-strong);
+}
+
+.search-bar {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.search-bar:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(75, 85, 99, 0.2);
+}
+
+.sidebar-shell {
+  width: 22%;
+  height: 100%;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  padding: 2rem;
+  display: none;
+  position: fixed;
+  inset: 0 auto 0 0;
+}
+
+@media (min-width: 1024px) {
+  .sidebar-shell {
+    display: block;
+  }
+}
+
+.nav-chip,
+.chip {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: var(--color-surface-subtle);
+  color: var(--color-text-subtle);
+  border: 1px solid transparent;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.nav-chip.active,
+.chip.active {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+
+.input-surface {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.input-surface:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(75, 85, 99, 0.2);
+}
+
+.editor-modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.editor-block {
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+}
+
+.note-card {
+  background: var(--color-surface-strong);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.icon-button.danger {
+  color: var(--color-danger-strong);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: 1rem;
 }

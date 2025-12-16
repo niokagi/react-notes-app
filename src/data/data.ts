@@ -1,4 +1,7 @@
-const getInitialData = () => [
+import { NoteModel } from "../types";
+import { normalizeBlocksFromBody } from "../utils/blocks";
+
+const seedNotes = [
   {
     id: 1,
     title: "Babel",
@@ -43,7 +46,16 @@ const getInitialData = () => [
   },
 ];
 
-const showFormattedDate = (date) => {
+const getInitialData = (): NoteModel[] =>
+  seedNotes.map((note) => ({
+    id: note.id,
+    title: note.title,
+    archived: note.archived,
+    createdAt: note.createdAt,
+    blocks: normalizeBlocksFromBody(note.body),
+  }));
+
+const showFormattedDate = (date: string) => {
   const options = {
     weekday: "long",
     year: "numeric",
