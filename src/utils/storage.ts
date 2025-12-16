@@ -14,18 +14,18 @@ type LegacyNote = {
 const normalizeNoteShape = (note: unknown): NoteModel | null => {
   if (!note || typeof note !== "object") return null;
   const candidate = note as LegacyNote;
-  const hasBlocks = Array.isArray(note.blocks);
+  const hasBlocks = Array.isArray(candidate.blocks);
   const blocks = hasBlocks
-    ? note.blocks
-    : normalizeBlocksFromBody(typeof note.body === "string" ? note.body : "");
+    ? candidate.blocks
+    : normalizeBlocksFromBody(typeof candidate.body === "string" ? candidate.body : "");
 
   return {
-    id: typeof note.id === "number" ? note.id : Date.now(),
-    title: typeof note.title === "string" ? note.title : "Untitled",
-    archived: Boolean(note.archived),
+    id: typeof candidate.id === "number" ? candidate.id : Date.now(),
+    title: typeof candidate.title === "string" ? candidate.title : "Untitled",
+    archived: Boolean(candidate.archived),
     createdAt:
-      typeof note.createdAt === "string"
-        ? note.createdAt
+      typeof candidate.createdAt === "string"
+        ? candidate.createdAt
         : new Date().toISOString(),
     blocks,
   };
