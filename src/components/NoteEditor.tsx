@@ -36,10 +36,8 @@ export default function NoteEditor({ note, onSave, onClose }: NoteEditorProps) {
     }
   };
 
-  const isSaveDisabled = useMemo(
-    () => blocksToPlainText(blocks).length === 0,
-    [blocks]
-  );
+  const plainText = useMemo(() => blocksToPlainText(blocks), [blocks]);
+  const isSaveDisabled = plainText.length === 0;
 
   const handleSave = () => {
     if (isSaveDisabled) return;
