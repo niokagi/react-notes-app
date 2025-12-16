@@ -33,19 +33,16 @@ const typeIconMap: Record<BlockType, JSX.Element> = {
 
 const convertBlock = (block: NoteBlock, type: BlockType): NoteBlock => {
   if (type === block.type) return block;
+
   if (type === "bullet" || type === "numbered") {
-    const seedItems =
-      block.items && block.items.length
-        ? block.items
-        : block.text
-          ? [block.text]
-          : [""];
-    return {
-      id: block.id,
-      type,
-      text: "",
-      items: seedItems,
-    };
+    let seedItems: string[] = [""];
+    if (block.items && block.items.length) {
+      seedItems = block.items;
+    } else if (block.text) {
+      seedItems = [block.text];
+    }
+
+    return { id: block.id, type, text: "", items: seedItems };
   }
 
   const sanitizedText = block.text.replace(/\/[a-zA-Z0-9]*$/, "").trim();
@@ -273,7 +270,7 @@ export function BlockEditor({ blocks, onChange }: BlockEditorProps) {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
-    const handleKey = (event: globalThis.KeyboardEvent) => {
+    const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setSlashState({ activeBlock: null, query: "", anchor: null, visible: false });
       }

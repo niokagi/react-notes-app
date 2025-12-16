@@ -2,8 +2,18 @@ import { NoteModel } from "../types";
 import { normalizeBlocksFromBody } from "./blocks";
 import { LOCAL_STORAGE_KEY } from "./constants";
 
-const normalizeNoteShape = (note: any): NoteModel | null => {
+type LegacyNote = {
+  id?: number;
+  title?: string;
+  archived?: boolean;
+  createdAt?: string;
+  body?: string;
+  blocks?: NoteModel["blocks"];
+};
+
+const normalizeNoteShape = (note: unknown): NoteModel | null => {
   if (!note || typeof note !== "object") return null;
+  const candidate = note as LegacyNote;
   const hasBlocks = Array.isArray(note.blocks);
   const blocks = hasBlocks
     ? note.blocks

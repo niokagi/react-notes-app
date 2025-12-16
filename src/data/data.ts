@@ -56,7 +56,7 @@ const getInitialData = (): NoteModel[] =>
   }));
 
 const showFormattedDate = (date: string) => {
-  const options = {
+  const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
     month: "long",
